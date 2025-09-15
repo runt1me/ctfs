@@ -1,0 +1,145 @@
+========================
+checksec --file=./ctfs/pwn_bypassword_v1/bypassword_v1 --output=json
+========================
+{
+    "./ctfs/pwn_bypassword_v1/bypassword_v1": {
+        "relro": "full",
+        "canary": "no",
+        "nx": "yes",
+        "pie": "no",
+        "rpath": "no",
+        "runpath": "yes",
+        "symbols": "yes",
+        "fortify_source": "no",
+        "fortified": "0",
+        "fortify-able": "4"
+    }
+}========================
+ROPgadget --binary ./ctfs/pwn_bypassword_v1/bypassword_v1
+========================
+Gadgets information
+============================================================
+0x00000000004012a8 : adc byte ptr [rax + 0x40], al ; add bh, bh ; loopne 0x401315 ; nop ; ret
+0x0000000000401718 : add al, ch ; ret 0xfffa
+0x00000000004012ab : add bh, bh ; loopne 0x401315 ; nop ; ret
+0x0000000000401716 : add byte ptr [rax], al ; add al, ch ; ret 0xfffa
+0x0000000000401723 : add byte ptr [rax], al ; add byte ptr [rax], al ; add byte ptr [rax], al ; nop ; leave ; ret
+0x000000000040127c : add byte ptr [rax], al ; add byte ptr [rax], al ; endbr64 ; ret
+0x0000000000401725 : add byte ptr [rax], al ; add byte ptr [rax], al ; nop ; leave ; ret
+0x00000000004017e3 : add byte ptr [rax], al ; add byte ptr [rax], al ; pop rbp ; ret
+0x0000000000401036 : add byte ptr [rax], al ; add dl, dh ; jmp 0x401020
+0x00000000004016ea : add byte ptr [rax], al ; add dword ptr [rax], eax ; add byte ptr [rax], al ; jmp 0x401729
+0x000000000040131a : add byte ptr [rax], al ; add dword ptr [rbp - 0x3d], ebx ; nop ; ret
+0x000000000040127e : add byte ptr [rax], al ; endbr64 ; ret
+0x0000000000401474 : add byte ptr [rax], al ; jmp 0x40137f
+0x00000000004016ee : add byte ptr [rax], al ; jmp 0x401729
+0x0000000000401727 : add byte ptr [rax], al ; nop ; leave ; ret
+0x00000000004017e5 : add byte ptr [rax], al ; pop rbp ; ret
+0x000000000040100d : add byte ptr [rax], al ; test rax, rax ; je 0x401016 ; call rax
+0x000000000040131b : add byte ptr [rcx], al ; pop rbp ; ret
+0x00000000004012aa : add dil, dil ; loopne 0x401315 ; nop ; ret
+0x0000000000401038 : add dl, dh ; jmp 0x401020
+0x00000000004016ec : add dword ptr [rax], eax ; add byte ptr [rax], al ; jmp 0x401729
+0x000000000040131c : add dword ptr [rbp - 0x3d], ebx ; nop ; ret
+0x0000000000401624 : add dword ptr [rbx + rcx + 0x48], esi ; cmp eax, 2 ; je 0x401664 ; jmp 0x401729
+0x00000000004016e7 : add eax, 0x2940 ; add dword ptr [rax], eax ; add byte ptr [rax], al ; jmp 0x401729
+0x0000000000401317 : add eax, 0x2d0b ; add dword ptr [rbp - 0x3d], ebx ; nop ; ret
+0x0000000000401085 : add eax, 0xf2000000 ; jmp 0x401020
+0x0000000000401017 : add esp, 8 ; ret
+0x0000000000401016 : add rsp, 8 ; ret
+0x0000000000401567 : and eax, 0x90fffffc ; leave ; ret
+0x000000000040165d : call qword ptr [rax + 0xc5e9]
+0x000000000040136f : call qword ptr [rax + 0xff3c35d]
+0x000000000040156a : call qword ptr [rax + 0xff3c3c9]
+0x000000000040103e : call qword ptr [rax - 0x5e1f00d]
+0x0000000000401014 : call rax
+0x0000000000401333 : cli ; jmp 0x4012c0
+0x0000000000401283 : cli ; ret
+0x00000000004017ef : cli ; sub rsp, 8 ; add rsp, 8 ; ret
+0x0000000000401628 : cmp eax, 2 ; je 0x401664 ; jmp 0x401729
+0x0000000000401627 : cmp rax, 2 ; je 0x401664 ; jmp 0x401729
+0x00000000004015c5 : dec ecx ; ret
+0x0000000000401330 : endbr64 ; jmp 0x4012c0
+0x0000000000401280 : endbr64 ; ret
+0x0000000000401012 : je 0x401016 ; call rax
+0x00000000004012a5 : je 0x4012b0 ; mov edi, 0x404010 ; jmp rax
+0x00000000004012e7 : je 0x4012f0 ; mov edi, 0x404010 ; jmp rax
+0x0000000000401625 : je 0x401632 ; cmp rax, 2 ; je 0x401664 ; jmp 0x401729
+0x000000000040162b : je 0x401664 ; jmp 0x401729
+0x000000000040103a : jmp 0x401020
+0x0000000000401334 : jmp 0x4012c0
+0x0000000000401408 : jmp 0x40137f
+0x0000000000401485 : jmp 0x401492
+0x00000000004016f0 : jmp 0x401729
+0x000000000040100b : jmp 0x4840103f
+0x000000000040148f : jmp 0x4840149f
+0x00000000004012ac : jmp rax
+0x000000000040156c : leave ; ret
+0x00000000004012ad : loopne 0x401315 ; nop ; ret
+0x0000000000401316 : mov byte ptr [rip + 0x2d0b], 1 ; pop rbp ; ret
+0x00000000004017e2 : mov eax, 0 ; pop rbp ; ret
+0x00000000004012a7 : mov edi, 0x404010 ; jmp rax
+0x000000000040165e : nop ; jmp 0x401729
+0x000000000040156b : nop ; leave ; ret
+0x0000000000401370 : nop ; pop rbp ; ret
+0x00000000004012af : nop ; ret
+0x000000000040132c : nop dword ptr [rax] ; endbr64 ; jmp 0x4012c0
+0x00000000004012a6 : or dword ptr [rdi + 0x404010], edi ; jmp rax
+0x0000000000401105 : or eax, 0xf2000000 ; jmp 0x401020
+0x0000000000401318 : or ebp, dword ptr [rip + 0x5d010000] ; ret
+0x000000000040131d : pop rbp ; ret
+0x000000000040101a : ret
+0x000000000040171a : ret 0xfffa
+0x0000000000401462 : retf 0x2b
+0x000000000040155f : retf 0x448b
+0x0000000000401011 : sal byte ptr [rdx + rax - 1], 0xd0 ; add rsp, 8 ; ret
+0x000000000040105b : sar edi, 0xff ; call qword ptr [rax - 0x5e1f00d]
+0x0000000000401125 : sldt word ptr [rax] ; add dl, dh ; jmp 0x401020
+0x0000000000401319 : sub eax, 0x5d010000 ; ret
+0x00000000004017f1 : sub esp, 8 ; add rsp, 8 ; ret
+0x00000000004017f0 : sub rsp, 8 ; add rsp, 8 ; ret
+0x0000000000401010 : test eax, eax ; je 0x401016 ; call rax
+0x00000000004012a3 : test eax, eax ; je 0x4012b0 ; mov edi, 0x404010 ; jmp rax
+0x00000000004012e5 : test eax, eax ; je 0x4012f0 ; mov edi, 0x404010 ; jmp rax
+0x000000000040100f : test rax, rax ; je 0x401016 ; call rax
+
+Unique gadgets found: 83
+========================
+gdb -nx -q -batch -ex "info functions" ./ctfs/pwn_bypassword_v1/bypassword_v1
+========================
+All defined functions:
+
+Non-debugging symbols:
+0x0000000000401000  _init
+0x0000000000401140  strncmp@plt
+0x0000000000401150  puts@plt
+0x0000000000401160  system@plt
+0x0000000000401170  printf@plt
+0x0000000000401180  alarm@plt
+0x0000000000401190  close@plt
+0x00000000004011a0  fputc@plt
+0x00000000004011b0  read@plt
+0x00000000004011c0  fgets@plt
+0x00000000004011d0  strcmp@plt
+0x00000000004011e0  fprintf@plt
+0x00000000004011f0  setvbuf@plt
+0x0000000000401200  open@plt
+0x0000000000401210  perror@plt
+0x0000000000401220  strtoul@plt
+0x0000000000401230  exit@plt
+0x0000000000401240  fwrite@plt
+0x0000000000401250  _start
+0x0000000000401280  _dl_relocate_static_pie
+0x0000000000401290  deregister_tm_clones
+0x00000000004012c0  register_tm_clones
+0x0000000000401300  __do_global_dtors_aux
+0x0000000000401330  frame_dummy
+0x0000000000401336  cls
+0x0000000000401373  commands
+0x00000000004014dd  read_secret
+0x000000000040156e  read_num
+0x00000000004015c8  menu
+0x000000000040172c  banner
+0x000000000040176b  setup
+0x00000000004017bc  main
+0x00000000004017ec  _fini
