@@ -1,0 +1,61 @@
+========================
+checksec --file=./ctfs/pwn_regularity/regularity --output=json
+========================
+{
+    "./ctfs/pwn_regularity/regularity": {
+        "relro": "no",
+        "canary": "no",
+        "nx": "no",
+        "pie": "no",
+        "rpath": "no",
+        "runpath": "no",
+        "symbols": "yes",
+        "fortify_source": "no",
+        "fortified": "0",
+        "fortify-able": "0"
+    }
+}========================
+ROPgadget --binary ./ctfs/pwn_regularity/regularity
+========================
+Gadgets information
+============================================================
+0x000000000040103a : adc byte ptr [rax], al ; add byte ptr [rax], al ; add byte ptr [rax], al ; jmp rsi
+0x0000000000401061 : adc byte ptr [rcx], al ; add byte ptr [rax], al ; syscall
+0x0000000000401040 : add bh, bh ; out 0xb8, al ; add dword ptr [rax], eax ; add byte ptr [rax], al ; syscall
+0x000000000040106d : add bl, al ; mov eax, 0x3c ; xor edi, edi ; syscall
+0x000000000040103d : add byte ptr [rax], al ; add byte ptr [rax], al ; jmp rsi
+0x000000000040103f : add byte ptr [rax], al ; jmp rsi
+0x000000000040106c : add byte ptr [rax], al ; ret
+0x0000000000401046 : add byte ptr [rax], al ; syscall
+0x0000000000401072 : add byte ptr [rax], al ; xor edi, edi ; syscall
+0x000000000040106a : add byte ptr [rcx], al ; add byte ptr [rax], al ; ret
+0x0000000000401044 : add dword ptr [rax], eax ; add byte ptr [rax], al ; syscall
+0x0000000000401068 : add esp, 0x100 ; ret
+0x0000000000401067 : add rsp, 0x100 ; ret
+0x000000000040105f : and al, 0xba ; adc byte ptr [rcx], al ; add byte ptr [rax], al ; syscall
+0x0000000000401070 : cmp al, 0 ; add byte ptr [rax], al ; xor edi, edi ; syscall
+0x0000000000401041 : jmp rsi
+0x000000000040105d : lea esi, [rsp] ; mov edx, 0x110 ; syscall
+0x000000000040105c : lea rsi, [rsp] ; mov edx, 0x110 ; syscall
+0x000000000040106f : mov eax, 0x3c ; xor edi, edi ; syscall
+0x0000000000401043 : mov eax, 1 ; syscall
+0x0000000000401060 : mov edx, 0x110 ; syscall
+0x0000000000401038 : mov esi, 0x40106f ; add byte ptr [rax], al ; add byte ptr [rax], al ; jmp rsi
+0x0000000000401042 : out 0xb8, al ; add dword ptr [rax], eax ; add byte ptr [rax], al ; syscall
+0x0000000000401039 : outsd dx, dword ptr [rsi] ; adc byte ptr [rax], al ; add byte ptr [rax], al ; add byte ptr [rax], al ; jmp rsi
+0x000000000040104a : ret
+0x0000000000401048 : syscall
+0x000000000040105e : xor al, 0x24 ; mov edx, 0x110 ; syscall
+0x0000000000401074 : xor edi, edi ; syscall
+
+Unique gadgets found: 28
+========================
+gdb -nx -q -batch -ex "info functions" ./ctfs/pwn_regularity/regularity
+========================
+All defined functions:
+
+Non-debugging symbols:
+0x0000000000401000  _start
+0x0000000000401043  write
+0x000000000040104b  read
+0x000000000040106f  exit
