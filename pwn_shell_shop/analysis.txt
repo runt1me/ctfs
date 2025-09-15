@@ -1,0 +1,133 @@
+========================
+checksec --file=./shell_shop --output=json
+========================
+{
+    "./shell_shop": {
+        "relro": "full",
+        "canary": "no",
+        "nx": "no",
+        "pie": "yes",
+        "rpath": "no",
+        "runpath": "yes",
+        "symbols": "yes",
+        "fortify_source": "no",
+        "fortified": "0",
+        "fortify-able": "3"
+    }
+}========================
+ROPgadget --binary ./shell_shop
+========================
+Gadgets information
+============================================================
+0x0000000000001442 : add al, ch ; enter -4, -1 ; jmp 0x148d
+0x000000000000123b : add byte ptr [rax], 0 ; add byte ptr [rax], al ; endbr64 ; jmp 0x11c0
+0x00000000000011b3 : add byte ptr [rax], 0 ; add byte ptr [rax], al ; ret
+0x0000000000001440 : add byte ptr [rax], al ; add al, ch ; enter -4, -1 ; jmp 0x148d
+0x000000000000123c : add byte ptr [rax], al ; add byte ptr [rax], al ; endbr64 ; jmp 0x11c0
+0x00000000000015fe : add byte ptr [rax], al ; add byte ptr [rax], al ; leave ; ret
+0x00000000000011b4 : add byte ptr [rax], al ; add byte ptr [rax], al ; ret
+0x000000000000148a : add byte ptr [rax], al ; add cl, cl ; ret
+0x0000000000001036 : add byte ptr [rax], al ; add dl, dh ; jmp 0x1020
+0x0000000000001230 : add byte ptr [rax], al ; add dword ptr [rbp - 0x3d], ebx ; nop dword ptr [rax] ; ret
+0x000000000000123e : add byte ptr [rax], al ; endbr64 ; jmp 0x11c0
+0x000000000000148b : add byte ptr [rax], al ; leave ; ret
+0x00000000000011b6 : add byte ptr [rax], al ; ret
+0x000000000000100d : add byte ptr [rax], al ; test rax, rax ; je 0x1016 ; call rax
+0x00000000000011a8 : add byte ptr [rax], al ; test rax, rax ; je 0x11b8 ; jmp rax
+0x00000000000011e9 : add byte ptr [rax], al ; test rax, rax ; je 0x11f8 ; jmp rax
+0x00000000000011f5 : add byte ptr [rax], r8b ; ret
+0x0000000000001231 : add byte ptr [rcx], al ; pop rbp ; ret
+0x000000000000122f : add byte ptr cs:[rax], al ; add dword ptr [rbp - 0x3d], ebx ; nop dword ptr [rax] ; ret
+0x00000000000011a7 : add byte ptr cs:[rax], al ; test rax, rax ; je 0x11b8 ; jmp rax
+0x00000000000011e8 : add byte ptr cs:[rax], al ; test rax, rax ; je 0x11f8 ; jmp rax
+0x000000000000148c : add cl, cl ; ret
+0x0000000000001038 : add dl, dh ; jmp 0x1020
+0x0000000000001489 : add dword ptr [rax], eax ; add byte ptr [rax], al ; leave ; ret
+0x0000000000001232 : add dword ptr [rbp - 0x3d], ebx ; nop dword ptr [rax] ; ret
+0x000000000000122e : add eax, 0x100002e ; pop rbp ; ret
+0x00000000000011e7 : add eax, 0x4800002e ; test eax, eax ; je 0x11f8 ; jmp rax
+0x0000000000001085 : add eax, 0xf2000000 ; jmp 0x1020
+0x0000000000001017 : add esp, 8 ; ret
+0x0000000000001016 : add rsp, 8 ; ret
+0x00000000000012f0 : call qword ptr [rax + 0xff3c35d]
+0x000000000000103e : call qword ptr [rax - 0x5e1f00d]
+0x0000000000001014 : call rax
+0x0000000000001243 : cli ; jmp 0x11c0
+0x0000000000001607 : cli ; sub rsp, 8 ; add rsp, 8 ; ret
+0x00000000000014e8 : cmp eax, 2 ; je 0x14fb ; jmp 0x1510
+0x00000000000012a0 : dec ecx ; ret
+0x0000000000001240 : endbr64 ; jmp 0x11c0
+0x0000000000001444 : enter -4, -1 ; jmp 0x148d
+0x000000000000100b : fldcw word ptr [rdi] ; add byte ptr [rax], al ; test rax, rax ; je 0x1016 ; call rax
+0x000000000000150b : inc byte ptr [r9] ; jmp 0x153f
+0x000000000000150c : inc byte ptr [rcx] ; jmp 0x153f
+0x0000000000001012 : je 0x1016 ; call rax
+0x00000000000011ad : je 0x11b8 ; jmp rax
+0x00000000000011ee : je 0x11f8 ; jmp rax
+0x00000000000014e6 : je 0x14ef ; cmp eax, 2 ; je 0x14fb ; jmp 0x1510
+0x00000000000014eb : je 0x14fb ; jmp 0x1510
+0x000000000000103a : jmp 0x1020
+0x0000000000001244 : jmp 0x11c0
+0x0000000000001370 : jmp 0x13a5
+0x0000000000001448 : jmp 0x148d
+0x000000000000153f : jmp 0x14ce
+0x00000000000014ed : jmp 0x1510
+0x00000000000014f9 : jmp 0x153f
+0x00000000000015d8 : jmp 0x15fd
+0x00000000000011af : jmp rax
+0x00000000000012a1 : leave ; ret
+0x00000000000011f1 : loopne 0x1259 ; nop dword ptr [rax + rax] ; ret
+0x0000000000001505 : mov byte ptr [rbp - 1], al ; jmp 0x153f
+0x000000000000150a : mov byte ptr [rbp - 2], 1 ; jmp 0x153f
+0x000000000000122c : mov byte ptr [rip + 0x2e05], 1 ; pop rbp ; ret
+0x00000000000015fd : mov eax, 0 ; leave ; ret
+0x0000000000001488 : mov eax, 1 ; leave ; ret
+0x00000000000012f1 : nop ; pop rbp ; ret
+0x00000000000011f3 : nop dword ptr [rax + rax] ; ret
+0x00000000000011b1 : nop dword ptr [rax] ; ret
+0x00000000000011f2 : nop word ptr [rax + rax] ; ret
+0x00000000000011ef : or bh, bh ; loopne 0x1259 ; nop dword ptr [rax + rax] ; ret
+0x0000000000001233 : pop rbp ; ret
+0x000000000000101a : ret
+0x0000000000001316 : retf 0
+0x0000000000001011 : sal byte ptr [rdx + rax - 1], 0xd0 ; add rsp, 8 ; ret
+0x000000000000105b : sar edi, 0xff ; call qword ptr [rax - 0x5e1f00d]
+0x0000000000001609 : sub esp, 8 ; add rsp, 8 ; ret
+0x0000000000001608 : sub rsp, 8 ; add rsp, 8 ; ret
+0x0000000000001010 : test eax, eax ; je 0x1016 ; call rax
+0x00000000000011ab : test eax, eax ; je 0x11b8 ; jmp rax
+0x00000000000011ec : test eax, eax ; je 0x11f8 ; jmp rax
+0x000000000000100f : test rax, rax ; je 0x1016 ; call rax
+0x00000000000011aa : test rax, rax ; je 0x11b8 ; jmp rax
+0x00000000000011eb : test rax, rax ; je 0x11f8 ; jmp rax
+0x0000000000001509 : xor eax, 0x1fe45c6 ; jmp 0x153f
+
+Unique gadgets found: 82
+========================
+gdb -nx -q -batch -ex "info functions" ./shell_shop
+========================
+All defined functions:
+
+Non-debugging symbols:
+0x0000000000001000  _init
+0x00000000000010c0  __cxa_finalize@plt
+0x00000000000010d0  puts@plt
+0x00000000000010e0  alarm@plt
+0x00000000000010f0  read@plt
+0x0000000000001100  fgets@plt
+0x0000000000001110  fprintf@plt
+0x0000000000001120  setvbuf@plt
+0x0000000000001130  strtoul@plt
+0x0000000000001140  exit@plt
+0x0000000000001150  fwrite@plt
+0x0000000000001160  _start
+0x0000000000001190  deregister_tm_clones
+0x00000000000011c0  register_tm_clones
+0x0000000000001200  __do_global_dtors_aux
+0x0000000000001240  frame_dummy
+0x0000000000001249  read_num
+0x00000000000012a3  setup
+0x00000000000012f4  shop
+0x00000000000013ff  check_coins
+0x000000000000148f  main
+0x0000000000001604  _fini
