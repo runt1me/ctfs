@@ -104,3 +104,16 @@ Non-debugging symbols:
 0x0000000000401160  __libc_csu_init
 0x00000000004011c0  __libc_csu_fini
 0x00000000004011c4  _fini
+========================
+objdump -R ./void
+========================
+
+./void:     file format elf64-x86-64
+
+DYNAMIC RELOCATION RECORDS
+OFFSET           TYPE              VALUE
+00000000004031f0 R_X86_64_GLOB_DAT  __libc_start_main@GLIBC_2.2.5
+00000000004031f8 R_X86_64_GLOB_DAT  __gmon_start__@Base
+0000000000404018 R_X86_64_JUMP_SLOT  read@GLIBC_2.2.5
+
+

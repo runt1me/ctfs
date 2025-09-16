@@ -2,11 +2,14 @@
 set disassembly-flavor intel
 
 # Breakpoint on shared library load
-catch load
+# catch load
 
 # Run until the .so is loaded
+break read
+break *vuln+32
+break *0x4011bb
+break *0x4011b9
 run < <(python challenge.py)
-break *pwnme+273
 
 # Break on my patch byte gadget
 # break *0x080485b8

